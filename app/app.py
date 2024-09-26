@@ -87,18 +87,15 @@ def edit_tracker(session, torrent_hash, old_tracker, new_tracker):
 async def webhook(request: Request):
     """Receive and process webhook"""
 
-
     """Generic webhook receiver to process dynamic data"""
     # Parse the incoming JSON data
     data = await request.json()
-
-    logger.info(f"Received event: {data}")
 
     # Allow testing the webhook
     if data['eventType'] == 'Test':
         logger.info("Test event received")
         return HTTPException(status_code=200, detail="Test event received")
-    
+
     # Skip events that are coming from Prowlarr acting as a proxy
     if data["instanceName"] == "Prowlarr" and data["source"] != "Prowlarr":
         logger.info("Skipping event from Prowlarr acting as a proxy")
