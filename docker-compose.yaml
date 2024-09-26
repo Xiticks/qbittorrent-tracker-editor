@@ -1,0 +1,12 @@
+services:
+  qbittorrent-tracker-editor:
+    image: ghcr.io/xiticks/qbittorrent-tracker-editor:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - QB_SERVER=http://your.qbittorrent.server:port
+      - USERNAME=qbittorrent_username
+      - PASSWORD=qbittorrent_password
+      - DUMMY_TRACKER_PART=your.dummy.tracker.part
+      - REAL_TRACKER_PART=your.real.tracker.part
+      - INDEXER_NAME=name_of_the_indexer (as written in Prowlarr or any other *arr, it can contains the " (Prowlarr)" part)
