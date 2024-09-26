@@ -1,3 +1,4 @@
 .DS_Store
-README.md
-docker-compose.yml
+.vscode/*
+!.vscode/launch.json
+.idea
