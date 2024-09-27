@@ -99,15 +99,13 @@ async def webhook(request: Request):
 
     torrent_hash = data['downloadId']
 
-    # Remove " (Prowlarr)" suffix if present in the environment variable
-    if " (Prowlarr)" in INDEXER_NAME:
-        INDEXER_NAME = INDEXER_NAME.replace(" (Prowlarr)", "")
-
     # Only process events for the specified indexer
     indexer = data['release']['indexer']
 
-    logger.info(f"Indexer: {indexer}")
-    logger.info(f"Indexer name: {INDEXER_NAME}")
+    # Add " (Prowlarr)" suffix if present in the environment variable and not in the indexer name
+    if " (Prowlarr)" in INDEXER_NAME and " (Prowlarr)" not in indexer:
+        logger.info("Adding (Prowlarr) suffix to the indexer name")
+        indexer += " (Prowlarr)"
 
     if indexer != INDEXER_NAME:
         logger.info(f"Skipping event from {indexer}")
