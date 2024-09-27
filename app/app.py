@@ -17,11 +17,6 @@ DUMMY_TRACKER_PART = os.getenv('DUMMY_TRACKER_PART')
 REAL_TRACKER_PART = os.getenv('REAL_TRACKER_PART')
 INDEXER_NAME = os.getenv('INDEXER_NAME')
 
-# Remove " (Prowlarr)" suffix if present in the environment variable
-if " (Prowlarr)" in INDEXER_NAME:
-    logger.info("Removing ' (Prowlarr)' suffix from INDEXER_NAME")
-    INDEXER_NAME = INDEXER_NAME.replace(" (Prowlarr)", "")
-
 logger.info(f"qBittorrent server: {QB_SERVER}")
 
 # Login to qBittorrent Web API
@@ -103,6 +98,10 @@ async def webhook(request: Request):
         return HTTPException(status_code=200, detail="Prowlarr acting as a proxy")
 
     torrent_hash = data['downloadId']
+
+    # Remove " (Prowlarr)" suffix if present in the environment variable
+    if " (Prowlarr)" in INDEXER_NAME:
+        INDEXER_NAME = INDEXER_NAME.replace(" (Prowlarr)", "")
 
     # Only process events for the specified indexer
     indexer = data['release']['indexer']
