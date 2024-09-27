@@ -18,8 +18,9 @@ REAL_TRACKER_PART = os.getenv('REAL_TRACKER_PART')
 INDEXER_NAME = os.getenv('INDEXER_NAME')
 
 # Remove " (Prowlarr)" suffix if present in the environment variable
-if INDEXER_NAME.endswith(" (Prowlarr)"):
-    INDEXER_NAME = INDEXER_NAME[:-11]
+if " (Prowlarr)" in INDEXER_NAME:
+    logger.info("Removing ' (Prowlarr)' suffix from INDEXER_NAME")
+    INDEXER_NAME = INDEXER_NAME.replace(" (Prowlarr)", "")
 
 logger.info(f"qBittorrent server: {QB_SERVER}")
 
